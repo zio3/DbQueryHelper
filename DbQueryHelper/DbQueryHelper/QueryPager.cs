@@ -85,15 +85,15 @@ namespace DbQueryHelper
         // NOTE: WebGrid uses an IEnumerable<dynamic> data source instead of IEnumerable<T> to avoid generics in the syntax.
         internal QueryPager(
             HttpContextBase context,
-            int rowsPerPage = 10,
-            string defaultSort = null,
-            bool canPage = true,
-            bool canSort = true,
-            string fieldNamePrefix = null,
-            string pageFieldName = null,
-            string selectionFieldName = null,
-            string sortFieldName = null,
-            string sortDirectionFieldName = null)
+            int rowsPerPage,
+            string defaultSort,
+            bool canPage,
+            bool canSort,
+            string fieldNamePrefix,
+            string pageFieldName,
+            string selectionFieldName,
+            string sortFieldName,
+            string sortDirectionFieldName)
         {
 
             Debug.Assert(context != null);
