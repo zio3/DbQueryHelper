@@ -56,8 +56,8 @@ namespace DbQueryHelper
 #endif
         public QueryPager(
               IQueryable<T> source = null,
-              string defaultSort = null,
               int rowsPerPage = 10,
+              string defaultSort = "Id",
               bool canPage = true,
               bool canSort = true,
               string fieldNamePrefix = null,
@@ -67,7 +67,7 @@ namespace DbQueryHelper
               string sortDirectionFieldName = null,
               Func<IOrderedQueryable<T>, IOrderedQueryable<T>> thenBy = null
                 )
-            : this(new HttpContextWrapper(System.Web.HttpContext.Current), defaultSort: defaultSort, rowsPerPage: rowsPerPage, canPage: canPage,
+            : this(new HttpContextWrapper(System.Web.HttpContext.Current), rowsPerPage: rowsPerPage, defaultSort: defaultSort, canPage: canPage,
                 canSort: canSort, fieldNamePrefix: fieldNamePrefix, pageFieldName: pageFieldName,
                 selectionFieldName: selectionFieldName, sortFieldName: sortFieldName, sortDirectionFieldName: sortDirectionFieldName)
         {
@@ -85,8 +85,8 @@ namespace DbQueryHelper
         // NOTE: WebGrid uses an IEnumerable<dynamic> data source instead of IEnumerable<T> to avoid generics in the syntax.
         internal QueryPager(
             HttpContextBase context,
-            string defaultSort = null,
             int rowsPerPage = 10,
+            string defaultSort = null,
             bool canPage = true,
             bool canSort = true,
             string fieldNamePrefix = null,
