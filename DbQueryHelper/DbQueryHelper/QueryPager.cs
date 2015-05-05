@@ -26,7 +26,6 @@ namespace DbQueryHelper
         private readonly HttpContextBase _context;
         private readonly bool _canPage;
         private readonly bool _canSort;
-        private readonly string _defaultSort;
         private readonly string _pageFieldName = "page";
         private readonly string _sortDirectionFieldName = "sortdir";
         private readonly string _selectionFieldName = "row";
@@ -57,7 +56,6 @@ namespace DbQueryHelper
         public QueryPager(
               IQueryable<T> source = null,
               int rowsPerPage = 10,
-              string defaultSort = "Id",
               bool canPage = true,
               bool canSort = true,
               string fieldNamePrefix = null,
@@ -67,7 +65,7 @@ namespace DbQueryHelper
               string sortDirectionFieldName = null,
               Func<IOrderedQueryable<T>, IOrderedQueryable<T>> thenBy = null
                 )
-            : this(new HttpContextWrapper(System.Web.HttpContext.Current), rowsPerPage: rowsPerPage, defaultSort: defaultSort, canPage: canPage,
+            : this(new HttpContextWrapper(System.Web.HttpContext.Current), rowsPerPage: rowsPerPage, canPage: canPage,
                 canSort: canSort, fieldNamePrefix: fieldNamePrefix, pageFieldName: pageFieldName,
                 selectionFieldName: selectionFieldName, sortFieldName: sortFieldName, sortDirectionFieldName: sortDirectionFieldName)
         {
@@ -86,7 +84,6 @@ namespace DbQueryHelper
         internal QueryPager(
             HttpContextBase context,
             int rowsPerPage,
-            string defaultSort,
             bool canPage,
             bool canSort,
             string fieldNamePrefix,
@@ -104,7 +101,6 @@ namespace DbQueryHelper
             }
 
             _context = context;
-            _defaultSort = defaultSort;
             this.RowsPerPage = rowsPerPage;
             _canPage = canPage;
             _canSort = canSort;
@@ -343,10 +339,6 @@ namespace DbQueryHelper
                     string sortColumn = QueryString[SortFieldName];
                     _sortColumn = sortColumn;
                     _sortColumnSet = true;
-                }
-                if (String.IsNullOrEmpty(_sortColumn))
-                {
-                    return _defaultSort ?? String.Empty;
                 }
                 return _sortColumn;
             }
@@ -793,7 +785,7 @@ namespace DbQueryHelper
 
             else if (_canSort && _sortColumnSet)
             {
-                SortColumn = _defaultSort;
+                SortColumn = string.Empty;
             }
         }
 
