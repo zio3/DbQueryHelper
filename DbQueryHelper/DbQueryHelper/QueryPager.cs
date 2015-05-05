@@ -270,10 +270,6 @@ namespace DbQueryHelper
                     if (prop == null)
                     {
                         // no-op in case navigation property came from querystring (falls back to default sort)
-                        if ((DefaultSort != null) && !sort.Equals(DefaultSort) && !String.IsNullOrEmpty(DefaultSort.SortColumn))
-                        {
-                            return Sort(data, DefaultSort);
-                        }
                         return data;
                     }
                     member = Expression.Property(member, prop);
@@ -285,11 +281,6 @@ namespace DbQueryHelper
             }
         }
 
-        protected SortInfo DefaultSort
-        {
-            get;
-            set;
-        }
 
         protected static IQueryable<T> SortGenericExpression<TProperty>(IQueryable<T> data, Expression body,
             ParameterExpression param, System.Web.Helpers.SortDirection sortDirection)
@@ -340,7 +331,7 @@ namespace DbQueryHelper
                     _sortColumn = sortColumn;
                     _sortColumnSet = true;
                 }
-                return _sortColumn;
+                return _sortColumn ?? string.Empty;
             }
             set
             {
