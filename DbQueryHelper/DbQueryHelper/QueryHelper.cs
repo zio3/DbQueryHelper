@@ -7,11 +7,17 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Helpers;
-using RB = Microsoft.CSharp.RuntimeBinder;
+//using System.Web.Helpers;
+//using RB = Microsoft.CSharp.RuntimeBinder;
 
 namespace DbQueryHelper
 {
+    public enum SortDirection
+    {
+        Ascending,
+        Descending
+    }
+
     public static class QueryHelper
     {
         static public IQueryable<T> Page<T>(this IQueryable<T> sorce, int pageIndex, int rowsPerPage = 10)
@@ -64,7 +70,7 @@ namespace DbQueryHelper
         }
 
         static IQueryable<T> SortGenericExpression<T, TProperty>(IQueryable<T> data, System.Linq.Expressions.Expression body,
-        ParameterExpression param, System.Web.Helpers.SortDirection sortDirection)
+        ParameterExpression param, SortDirection sortDirection)
         {
 
             Debug.Assert(data != null);
@@ -75,7 +81,7 @@ namespace DbQueryHelper
             // this to an IQueryable<TElement> so that the reflection done by the LINQ expressions will work.
             //IQueryable<T_> data2 = data.Cast<T_>();
             Expression<Func<T, TProperty>> lambda = Expression.Lambda<Func<T, TProperty>>(body, param);
-            if (sortDirection == System.Web.Helpers.SortDirection.Descending)
+            if (sortDirection == SortDirection.Descending)
             {
                 return data.OrderByDescending(lambda);
             }
