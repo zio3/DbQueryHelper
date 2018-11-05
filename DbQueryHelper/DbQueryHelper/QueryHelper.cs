@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 //using System.Web.Helpers;
-//using RB = Microsoft.CSharp.RuntimeBinder;
+using RB = Microsoft.CSharp.RuntimeBinder;
 
 namespace DbQueryHelper
 {
