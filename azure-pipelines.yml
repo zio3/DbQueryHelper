@@ -18,8 +18,9 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet pack'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet pack'
   inputs:
     command: pack
     versioningScheme: byPrereleaseNumber
@@ -27,10 +28,9 @@ steps:
     minorVersion: '$(Minor)'
     patchVersion: '$(Patch)'
     
-
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet push'
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
   inputs:
     command: push
 
-    publishVstsFeed: 'WebHelper'
+    publishVstsFeed: '0e65ed61-cfd7-45d3-b5f7-82a8386bea9f'
